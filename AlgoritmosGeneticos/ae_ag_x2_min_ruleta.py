@@ -22,7 +22,7 @@ intervalo [-31, 31]
 El rango dado por [-31, 31] es 62 es decir: X_MIN - XMAX por tanto el rango
 debe ser contenido por un exponente de 2 tal que 2^exponente >= 62, en este
 caso exponente = 6, es decir 2^6=64, ( log2(62)=5.95 ) de este modo obtengo la
-longitud del cromosoma, luego solo resta mapear lso cromosomas binarios en el
+longitud del cromosoma, luego solo resta mapear los cromosomas binarios en el
 rango [-31, 31]
 Para mapear se usa la fórmula:
 x=X_MIN+decimal(valor_binario)*(X_MAX - X_MIN)/((2 ** LONGITUD_CROMOSOMA) - 1)
@@ -47,9 +47,9 @@ plt.style.use('dark_background')
 
 # parametros
 TAMANIO_POBLACION = 4
-LONGITUD_CROMOSOMA = 10
-TASA_MUTACION = 0.1
-TASA_CRUCE = 0.92
+LONGITUD_CROMOSOMA = 10 # Debido a que se requiere un dígito decimal
+TASA_MUTACION = 0.09
+TASA_CRUCE = 0.85
 GENERACIONES = 10
 X_MIN = -31
 X_MAX = 31
@@ -180,8 +180,8 @@ def algoritmo_genetico(tamanio_poblacion, longitud_cromosoma, tasa_mutacion, tas
 
         # Aquí se aplica elitismo
         # Se reemplazan los peores cromosomas con los mejores progenitores
-        poblacion.sort(key=aptitud)  # se ordena la poblacion por aptitud en forma ascendente
-        # se ordena los descendientes por aptitud en forma descendente
+        poblacion.sort(key=aptitud) # se ordena la poblacion por aptitud en forma ascendente
+                                    # se ordena los descendientes por aptitud en forma descendente
         descendientes_mutados.sort(key=aptitud, reverse=True)
         for i in range(len(descendientes_mutados)):
             if aptitud(descendientes_mutados[i]) > aptitud(poblacion[i]):

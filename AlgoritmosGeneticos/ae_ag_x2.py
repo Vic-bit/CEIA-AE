@@ -11,7 +11,7 @@ import random
 
 # Parametros
 TAMANIO_POBLACION = 4 # Es un hiperparámetro experimental
-LONGITUD_CROMOSOMA = 5
+LONGITUD_CROMOSOMA = 5 # porque 2^5=32, cubriendo el rango [0, 31]
 TASA_MUTACION = 0.1
 TASA_CRUCE = 0.92
 GENERACIONES = 10
@@ -194,3 +194,14 @@ print("_________________________________________________________________________
 print()
 mejor_solucion = algoritmo_genetico(TAMANIO_POBLACION, LONGITUD_CROMOSOMA, TASA_MUTACION, TASA_CRUCE, GENERACIONES)
 print("Mejor solución:", int(mejor_solucion, 2), "Aptitud:", aptitud(mejor_solucion))
+
+# 1 - Mejor solución: 31 Aptitud: 961
+# 2 - Mejor solución: 31 Aptitud: 961
+# 3 - Mejor solución: 31 Aptitud: 961
+# 4 - Mejor solución: 31 Aptitud: 961
+# 5 - Mejor solución: 29 Aptitud: 841
+# 6 - Mejor solución: 31 Aptitud: 961
+# 7 - Mejor solución: 31 Aptitud: 961
+# 8 - Mejor solución: 30 Aptitud: 900
+# 9 - Mejor solución: 31 Aptitud: 961
+# 10 - Mejor solución: 31 Aptitud: 961
