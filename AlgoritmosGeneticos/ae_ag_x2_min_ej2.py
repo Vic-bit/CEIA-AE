@@ -203,7 +203,7 @@ def mutacion(cromosoma, tasa_mutacion):
 #  -----------------------------------------------------------------
 # aplicación de operadores geneticos
 #  -----------------------------------------------------------------
-def algoritmo_genetico(tamanio_poblacion, longitud_cromosoma, tasa_mutacion, tasa_cruce, generaciones, metodo):
+def algoritmo_genetico(tamanio_poblacion, longitud_cromosoma, tasa_mutacion, tasa_cruce, generaciones, metodo, plot=False):
     poblacion = inicializar_poblacion(tamanio_poblacion, longitud_cromosoma)
     mejor_funcion_objetivo_generaciones = []  # Lista para almacenar la aptitud del mejor individuo y grficar luego
 
@@ -259,15 +259,18 @@ def algoritmo_genetico(tamanio_poblacion, longitud_cromosoma, tasa_mutacion, tas
         print("_________________________________________________________________________________")
         '''
 
-    '''
     # Graficar la evolución de la aptitud
-    plt.plot(range(1, generaciones + 1), mejor_funcion_objetivo_generaciones, marker='o')
-    plt.xlabel('Generación')
-    plt.ylabel('Valor de la Función Objetivo')
-    plt.title('Curva de Convergencia del Algoritmo Genético')
-    plt.grid(True)
-    plt.show()
-    '''
+    if plot:
+
+        plt.figure()
+        plt.plot(range(1, generaciones + 1), mejor_funcion_objetivo_generaciones, marker='o')
+        plt.xlabel('Generación')
+        plt.ylabel('Valor de la Función Objetivo')
+        plt.title('Curva de Convergencia del Algoritmo Genético - Método ' + metodo)
+        plt.legend([metodo])
+        plt.grid(True)
+        plt.show()
+        
     return max(poblacion, key=aptitud)  # se retorna el mejor individuo
 
 
@@ -286,9 +289,9 @@ mejores_soluciones_torneo = []
 mejores_soluciones_ranking = []
 
 for _ in range(LANZAMIENTOS):
-    mejores_soluciones_ruleta.append(binario_a_decimal(algoritmo_genetico(TAMANIO_POBLACION, LONGITUD_CROMOSOMA, TASA_MUTACION, TASA_CRUCE, GENERACIONES, 'ruleta')))
-    mejores_soluciones_torneo.append(binario_a_decimal(algoritmo_genetico(TAMANIO_POBLACION, LONGITUD_CROMOSOMA, TASA_MUTACION, TASA_CRUCE, GENERACIONES, 'torneo')))
-    mejores_soluciones_ranking.append(binario_a_decimal(algoritmo_genetico(TAMANIO_POBLACION, LONGITUD_CROMOSOMA, TASA_MUTACION, TASA_CRUCE, GENERACIONES, 'ranking')))
+    mejores_soluciones_ruleta.append(binario_a_decimal(algoritmo_genetico(TAMANIO_POBLACION, LONGITUD_CROMOSOMA, TASA_MUTACION, TASA_CRUCE, GENERACIONES, 'ruleta', plot=False)))
+    mejores_soluciones_torneo.append(binario_a_decimal(algoritmo_genetico(TAMANIO_POBLACION, LONGITUD_CROMOSOMA, TASA_MUTACION, TASA_CRUCE, GENERACIONES, 'torneo', plot=False)))
+    mejores_soluciones_ranking.append(binario_a_decimal(algoritmo_genetico(TAMANIO_POBLACION, LONGITUD_CROMOSOMA, TASA_MUTACION, TASA_CRUCE, GENERACIONES, 'ranking', plot=False)))
 
 mejores_soluciones = {
     'ruleta': mejores_soluciones_ruleta,
@@ -313,9 +316,9 @@ mejores_soluciones_torneo = []
 mejores_soluciones_ranking = []
 
 for _ in range(LANZAMIENTOS):
-    mejores_soluciones_ruleta.append(binario_a_decimal(algoritmo_genetico(TAMANIO_POBLACION_RULETA, LONGITUD_CROMOSOMA, TASA_MUTACION_RULETA, TASA_CRUCE, GENERACIONES_RULETA, 'ruleta')))
-    mejores_soluciones_torneo.append(binario_a_decimal(algoritmo_genetico(TAMANIO_POBLACION_TORNEO, LONGITUD_CROMOSOMA, TASA_MUTACION_TORNEO, TASA_CRUCE, GENERACIONES_TORNEO, 'torneo')))
-    mejores_soluciones_ranking.append(binario_a_decimal(algoritmo_genetico(TAMANIO_POBLACION_RANKING, LONGITUD_CROMOSOMA, TASA_MUTACION_RANKING, TASA_CRUCE, GENERACIONES_RANKING, 'ranking')))
+    mejores_soluciones_ruleta.append(binario_a_decimal(algoritmo_genetico(TAMANIO_POBLACION_RULETA, LONGITUD_CROMOSOMA, TASA_MUTACION_RULETA, TASA_CRUCE, GENERACIONES_RULETA, 'ruleta', plot=False)))
+    mejores_soluciones_torneo.append(binario_a_decimal(algoritmo_genetico(TAMANIO_POBLACION_TORNEO, LONGITUD_CROMOSOMA, TASA_MUTACION_TORNEO, TASA_CRUCE, GENERACIONES_TORNEO, 'torneo', plot=False)))
+    mejores_soluciones_ranking.append(binario_a_decimal(algoritmo_genetico(TAMANIO_POBLACION_RANKING, LONGITUD_CROMOSOMA, TASA_MUTACION_RANKING, TASA_CRUCE, GENERACIONES_RANKING, 'ranking', plot=False)))
 
 mejores_soluciones = {
     'ruleta': mejores_soluciones_ruleta,
@@ -333,4 +336,9 @@ print(df.describe().loc[['min','mean','max','std']].transpose())
 print("_________________________________________________________________________________")
 print('e)')
 
-
+mejor_solucion_ruleta = algoritmo_genetico(TAMANIO_POBLACION_RULETA, LONGITUD_CROMOSOMA, TASA_MUTACION_RULETA, TASA_CRUCE, GENERACIONES_RULETA, 'ruleta', plot=True)
+#mejor_solucion_torneo = algoritmo_genetico(TAMANIO_POBLACION, LONGITUD_CROMOSOMA, TASA_MUTACION, TASA_CRUCE, GENERACIONES, 'torneo', plot=True)
+mejor_solucion_ranking = algoritmo_genetico(TAMANIO_POBLACION, LONGITUD_CROMOSOMA, TASA_MUTACION, TASA_CRUCE, GENERACIONES, 'ranking', plot=True)
+print("Mejor solución con método ruleta:", binario_a_decimal(mejor_solucion_ruleta), "Aptitud:", aptitud(mejor_solucion_ruleta))
+#print("Mejor solución con método torneo:", binario_a_decimal(mejor_solucion_torneo), "Aptitud:", aptitud(mejor_solucion_torneo))
+print("Mejor solución con método ranking:", binario_a_decimal(mejor_solucion_ranking), "Aptitud:", aptitud(mejor_solucion_ranking))
